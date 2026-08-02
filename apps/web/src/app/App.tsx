@@ -1,4 +1,4 @@
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 
 import { AppErrorBoundary } from './error-boundary';
 import { AppProviders } from './providers';

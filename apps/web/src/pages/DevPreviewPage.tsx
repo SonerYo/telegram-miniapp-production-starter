@@ -59,6 +59,15 @@ export function DevPreviewPage() {
             <Button
               variant="secondary"
               onClick={() => {
+                configureMockApi({ latencyMs: 1200, fail: false, offline: false });
+                void refresh();
+              }}
+            >
+              Slow loading
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
                 configureMockApi({ empty: true, fail: false, offline: false });
                 void refresh();
               }}

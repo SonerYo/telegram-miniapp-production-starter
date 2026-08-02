@@ -29,6 +29,10 @@ test('capture verified public UI states', async ({ page }) => {
 
   await capture(page, '/profile', 'profile.png');
   await capture(page, '/dev/telegram-preview', 'mock-controls.png');
+  await page.getByRole('button', { name: 'Slow loading' }).click();
+  await screenshot(page, 'tasks-loading.png', '/tasks');
+  await expect(page.getByText('Run the production readiness checklist')).toBeVisible();
+  await page.goto('/dev/telegram-preview');
   await page.getByRole('button', { name: 'Empty tasks' }).click();
   await screenshot(page, 'tasks-empty.png', '/tasks');
   await page.goto('/dev/telegram-preview');

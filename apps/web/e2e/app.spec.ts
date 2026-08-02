@@ -76,6 +76,14 @@ test('empty, API error, offline, theme, safe area, and 404 states are reachable'
   ).toBeVisible();
 });
 
+test('slow API state exposes task skeletons before data', async ({ page }) => {
+  await page.goto('/dev/telegram-preview');
+  await page.getByRole('button', { name: 'Slow loading' }).click();
+  await page.getByRole('link', { name: /Tasks/ }).click();
+  await expect(page.locator('[class*="skeleton"]').first()).toBeVisible();
+  await expect(page.getByText('Run the production readiness checklist')).toBeVisible();
+});
+
 test('critical pages have no serious automated accessibility violations', async ({ page }) => {
   for (const route of ['/', '/tasks', '/profile']) {
     await page.goto(route);

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { Icon } from '@/components/ui/Icon';
 import { Avatar, Badge, Card, ErrorState, ListRow, Skeleton } from '@/components/ui/primitives';

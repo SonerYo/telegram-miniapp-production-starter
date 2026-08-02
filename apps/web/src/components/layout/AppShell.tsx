@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 
 import { Icon, type IconName } from '@/components/ui/Icon';
 import {

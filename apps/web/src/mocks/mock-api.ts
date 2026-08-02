@@ -53,9 +53,10 @@ const SEEDED_TASKS: Task[] = [
 let tasks = structuredClone(SEEDED_TASKS);
 let shouldFail = false;
 let shouldAppearOffline = false;
+let latencyMs = 120;
 
 async function simulateNetwork(): Promise<void> {
-  await new Promise((resolve) => window.setTimeout(resolve, 120));
+  await new Promise((resolve) => window.setTimeout(resolve, latencyMs));
   if (shouldAppearOffline)
     throw new ApiClientError('Mock device is offline.', 'network_error', 0, null);
   if (shouldFail)
@@ -71,16 +72,19 @@ export function configureMockApi(options: {
   fail?: boolean;
   offline?: boolean;
   empty?: boolean;
+  latencyMs?: number;
 }): void {
   if (options.fail !== undefined) shouldFail = options.fail;
   if (options.offline !== undefined) shouldAppearOffline = options.offline;
   if (options.empty !== undefined) tasks = options.empty ? [] : structuredClone(SEEDED_TASKS);
+  if (options.latencyMs !== undefined) latencyMs = options.latencyMs;
 }
 
 export function resetMockApi(): void {
   tasks = structuredClone(SEEDED_TASKS);
   shouldFail = false;
   shouldAppearOffline = false;
+  latencyMs = 120;
 }
 
 export const mockApiClient: ApiClient = {
