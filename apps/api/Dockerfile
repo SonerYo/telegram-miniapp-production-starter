@@ -14,14 +14,15 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 FROM python:3.12.13-slim-bookworm AS runtime
 ENV PATH="/app/.venv/bin:$PATH" \
+    PYTHONPATH="/app/src" \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 RUN groupadd --system app && useradd --system --gid app --home-dir /app app
 WORKDIR /app
 COPY --from=builder --chown=app:app /build/.venv ./.venv
+COPY --chown=app:app apps/api/src ./src
 COPY --chown=app:app apps/api/alembic ./alembic
 COPY --chown=app:app apps/api/alembic.ini ./alembic.ini
 USER app
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2", "--proxy-headers"]
-

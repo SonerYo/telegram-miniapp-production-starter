@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly }
+    groups:
+      web-minor-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: uv
+    directory: /apps/api
+    schedule: { interval: weekly }
+    groups:
+      api-minor-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }
+  - package-ecosystem: docker
+    directory: /apps/api
+    schedule: { interval: monthly }
+  - package-ecosystem: docker
+    directory: /apps/web
+    schedule: { interval: monthly }

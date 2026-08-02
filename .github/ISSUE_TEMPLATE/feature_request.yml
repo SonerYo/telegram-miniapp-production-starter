@@ -1,0 +1,22 @@
+name: Feature request
+description: Propose a focused, reusable starter capability.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes: { label: Problem, description: "What repeated developer problem would this solve?" }
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes: { label: Proposed approach }
+    validations: { required: true }
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Primary area
+      options: [Frontend, Backend, Telegram integration, Infrastructure, Documentation]
+    validations: { required: true }
+  - type: textarea
+    id: alternatives
+    attributes: { label: Alternatives considered }
