@@ -30,3 +30,13 @@ def test_production_rejects_missing_bot_token() -> None:
 def test_wildcard_cors_is_rejected() -> None:
     with pytest.raises(ValidationError, match="wildcard"):
         Settings(cors_allowed_origins="*")
+
+
+def test_cors_requires_exact_http_origin() -> None:
+    with pytest.raises(ValidationError, match="exact HTTP"):
+        Settings(cors_allowed_origins="https://example.invalid/path")
+
+
+def test_wildcard_trusted_host_is_rejected() -> None:
+    with pytest.raises(ValidationError, match="wildcard trusted"):
+        Settings(trusted_hosts="*.example.invalid")

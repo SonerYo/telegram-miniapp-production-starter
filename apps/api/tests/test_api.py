@@ -67,6 +67,11 @@ async def test_validation_uses_stable_error_contract(
     assert payload["code"] == "validation_error"
     assert payload["details"][0]["location"] == ["body", "text"]
 
+    whitespace = await client.post(
+        "/api/v1/tasks", headers=auth_headers(1001), json={"text": "   "}
+    )
+    assert whitespace.status_code == 422
+
 
 async def test_browser_mock_auth_is_explicit(
     client: AsyncClient,

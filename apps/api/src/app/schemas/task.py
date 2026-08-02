@@ -7,10 +7,14 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class TaskCreate(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
     text: str = Field(min_length=1, max_length=500)
 
 
 class TaskUpdate(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
     text: str | None = Field(default=None, min_length=1, max_length=500)
     is_completed: bool | None = None
 

@@ -55,10 +55,3 @@ async def update_task(
 async def delete_task(session: AsyncSession, task: Task) -> None:
     await session.delete(task)
     await session.commit()
-
-
-async def delete_all_owned_tasks(session: AsyncSession, owner_id: UUID) -> None:
-    tasks, _ = await list_tasks(session, owner_id, None)
-    for task in tasks:
-        await session.delete(task)
-    await session.commit()

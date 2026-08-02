@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 from functools import lru_cache
+from urllib.parse import urlsplit
 
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -50,6 +51,25 @@ class Settings(BaseSettings):
             raise ValueError("must be a non-empty comma-separated list")
         return value
 
+    @field_validator("cors_allowed_origins")
+    @classmethod
+    def validate_cors_origins(cls, value: str) -> str:
+        for origin in (part.strip() for part in value.split(",")):
+            if "*" in origin:
+                raise ValueError("wildcard CORS origins are not allowed")
+            parsed = urlsplit(origin)
+            if (
+                parsed.scheme not in {"http", "https"}
+                or not parsed.hostname
+                or parsed.username is not None
+                or parsed.password is not None
+                or parsed.path not in {"", "/"}
+                or parsed.query
+                or parsed.fragment
+            ):
+                raise ValueError("CORS origins must be exact HTTP(S) origins")
+        return value
+
     @field_validator("log_level")
     @classmethod
     def normalize_log_level(cls, value: str) -> str:
@@ -73,6 +93,8 @@ class Settings(BaseSettings):
                 raise ValueError("LOG_FORMAT must be json in production")
         if "*" in self.cors_origins:
             raise ValueError("wildcard CORS origins are not allowed")
+        if any("*" in host for host in self.allowed_hosts):
+            raise ValueError("wildcard trusted hosts are not allowed")
         return self
 
     @property
