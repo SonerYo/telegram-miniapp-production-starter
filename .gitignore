@@ -1,0 +1,46 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# JavaScript
+node_modules/
+.pnpm-store/
+dist/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+*.tsbuildinfo
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Databases and runtime data
+*.db
+*.sqlite
+*.sqlite3
+postgres-data/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local artifacts
+telegram-miniapp-production-starter-v*.zip
+openapi.generated.json
+logs/
+tmp/
+

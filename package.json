@@ -1,0 +1,23 @@
+{
+  "name": "telegram-miniapp-production-starter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-oriented full-stack starter for Telegram Mini Apps",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @starter/web dev",
+    "build": "pnpm --filter @starter/web build",
+    "lint": "pnpm --filter @starter/web lint",
+    "typecheck": "pnpm --filter @starter/web typecheck",
+    "test": "pnpm --filter @starter/web test",
+    "format": "pnpm --filter @starter/web format",
+    "format:check": "pnpm --filter @starter/web format:check",
+    "e2e": "pnpm --filter @starter/web test:e2e"
+  }
+}
+

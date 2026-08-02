@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">Telegram Mini App Production Starter</title>
+  <desc id="desc">Starter Space layered window mark and project wordmark.</desc>
+  <defs>
+    <linearGradient id="accent" x1="28" y1="24" x2="118" y2="132" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B7CFF"/>
+      <stop offset="1" stop-color="#5B46E8"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="144" height="144" rx="42" fill="#F4F1FF"/>
+  <rect x="48" y="61" width="74" height="63" rx="17" fill="#FFFFFF" stroke="#CEC6F8" stroke-width="6"/>
+  <rect x="60" y="48" width="74" height="63" rx="17" fill="url(#accent)"/>
+  <path d="M80 70h31M80 84h21" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M98 124h27m0 0-10-10m10 10-10 10" fill="none" stroke="#3525A7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="190" y="76" fill="#19172A" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif" font-size="46" font-weight="750">Starter Space</text>
+  <text x="192" y="116" fill="#665F78" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif" font-size="24" font-weight="500">Telegram Mini App production starter</text>
+</svg>
+
