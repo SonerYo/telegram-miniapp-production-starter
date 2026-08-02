@@ -4,10 +4,10 @@
   "private": true,
   "description": "Production-oriented full-stack starter for Telegram Mini Apps",
   "license": "MIT",
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@11.18.0",
   "engines": {
     "node": ">=24.0.0",
-    "pnpm": ">=10.0.0"
+    "pnpm": ">=11.0.0"
   },
   "scripts": {
     "dev": "pnpm --filter @starter/web dev",
@@ -20,4 +20,3 @@
     "e2e": "pnpm --filter @starter/web test:e2e"
   }
 }
-

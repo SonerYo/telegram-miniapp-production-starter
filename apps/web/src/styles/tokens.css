@@ -1,0 +1,36 @@
+:root {
+  --color-bg: #f5f3ef;
+  --color-surface: #fff;
+  --color-surface-raised: #faf8fc;
+  --color-text: #1d1b24;
+  --color-text-muted: #746f7d;
+  --color-accent: #6f5ce7;
+  --color-accent-contrast: #fff;
+  --color-border: #e6e1ec;
+  --color-danger: #c63b4a;
+  --color-success: #258c61;
+  --color-overlay: rgba(24, 19, 38, 0.42);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --radius-small: 10px;
+  --radius-medium: 14px;
+  --radius-large: 20px;
+  --radius-sheet: 24px;
+  --shadow-card: 0 8px 28px rgba(35, 27, 56, 0.06);
+  --shadow-sheet: 0 24px 64px rgba(19, 14, 32, 0.2);
+  --shadow-accent: 0 8px 18px color-mix(in srgb, var(--color-accent) 26%, transparent);
+  --nav-height: 68px;
+  --content-max: 720px;
+  --tg-viewport-height: 100dvh;
+  --tg-viewport-stable-height: 100dvh;
+  --tg-safe-area-top: env(safe-area-inset-top, 0px);
+  --tg-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --tg-content-safe-area-top: 0px;
+  --tg-content-safe-area-bottom: 0px;
+}
