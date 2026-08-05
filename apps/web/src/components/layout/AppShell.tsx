@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 
 import { Icon, type IconName } from '@/components/ui/Icon';
@@ -47,7 +47,7 @@ export function AppShell() {
   const isNested = !['/', '/tasks', '/activity', '/profile'].includes(location.pathname);
   const needsBackButton = taskSheet.open || Boolean(deleteTaskId) || isNested;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!needsBackButton) return;
     return runtime.showBackButton(() => {
       if (taskSheet.open) closeSheet();

@@ -18,8 +18,8 @@ test('tab navigation, task CRUD, and dialog confirmation work', async ({ page })
   await sheet.getByRole('button', { name: 'Add task' }).click();
   await expect(page.getByText('E2E release check')).toBeVisible();
 
-  const row = page.getByText('E2E release check').locator('..').locator('..');
-  await row.getByRole('button', { name: /Edit E2E release check/ }).click();
+  const createdRow = page.locator('article').filter({ hasText: 'E2E release check' });
+  await createdRow.getByRole('button', { name: /Edit E2E release check/ }).click();
   await page
     .getByRole('dialog', { name: 'Edit task' })
     .getByLabel('Task')
@@ -27,9 +27,10 @@ test('tab navigation, task CRUD, and dialog confirmation work', async ({ page })
   await page.getByRole('button', { name: 'Save changes' }).click();
   await expect(page.getByText('E2E release verified')).toBeVisible();
 
-  await page.getByRole('button', { name: /Complete E2E release verified/ }).click();
-  await expect(row.getByText(/^Completed ·/)).toBeVisible();
-  await page.getByRole('button', { name: /Delete E2E release verified/ }).click();
+  const verifiedRow = page.locator('article').filter({ hasText: 'E2E release verified' });
+  await verifiedRow.getByRole('button', { name: /Complete E2E release verified/ }).click();
+  await expect(verifiedRow.getByText(/^Completed ·/)).toBeVisible();
+  await verifiedRow.getByRole('button', { name: /Delete E2E release verified/ }).click();
   const confirmation = page.getByRole('alertdialog', { name: 'Delete this task?' });
   await expect(confirmation).toBeVisible();
   await confirmation.getByRole('button', { name: 'Delete' }).click();

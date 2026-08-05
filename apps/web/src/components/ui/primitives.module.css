@@ -202,7 +202,7 @@
   font-weight: 720;
 }
 .badge[data-tone='accent'] {
-  color: var(--color-accent);
+  color: color-mix(in srgb, var(--color-accent) 90%, var(--color-text));
   background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
   border-color: color-mix(in srgb, var(--color-accent) 24%, var(--color-border));
 }
