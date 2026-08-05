@@ -5,6 +5,7 @@ import type { TelegramEvent, TelegramEventHandler, TelegramWebApp } from './type
 
 afterEach(() => {
   delete window.Telegram;
+  delete window.__STARTER_MOCK_RUNTIME__;
 });
 
 describe('runtime selection', () => {
@@ -27,11 +28,17 @@ describe('runtime selection', () => {
     expect(webApp.expand).toHaveBeenCalledOnce();
     expect(onEvent).toHaveBeenCalled();
 
+    const initialSnapshot = runtime.getSnapshot();
+    expect(runtime.getSnapshot()).toBe(initialSnapshot);
+
     const changed = vi.fn();
     const stop = runtime.subscribe(changed);
     const themeCallback = onEvent.mock.calls.find(([event]) => event === 'themeChanged')?.[1];
+    webApp.colorScheme = 'dark';
     themeCallback?.();
     expect(changed).toHaveBeenCalledOnce();
+    expect(runtime.getSnapshot()).not.toBe(initialSnapshot);
+    expect(runtime.getSnapshot().colorScheme).toBe('dark');
     stop();
 
     const backHandler = vi.fn();
@@ -67,6 +74,17 @@ describe('runtime selection', () => {
     runtime.openTelegramLink('https://t.me/example');
     expect(webApp.enableClosingConfirmation).toHaveBeenCalledOnce();
     expect(webApp.disableClosingConfirmation).toHaveBeenCalledOnce();
+  });
+
+  it('uses the browser mock when the injected WebApp bridge has no launch data', async () => {
+    const webApp = fakeWebApp();
+    webApp.initData = '';
+    window.Telegram = { WebApp: webApp };
+
+    const runtime = await createTelegramRuntime();
+
+    expect(runtime.kind).toBe('browser-mock');
+    expect(runtime.isTelegramRuntime).toBe(false);
   });
 
   it('validates external links and cleans event subscriptions', () => {

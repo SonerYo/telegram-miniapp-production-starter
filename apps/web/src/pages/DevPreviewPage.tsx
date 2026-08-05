@@ -12,6 +12,7 @@ export function DevPreviewPage() {
   const snapshot = useTelegramSnapshot();
   const queryClient = useQueryClient();
   const refresh = async () => queryClient.invalidateQueries({ queryKey: taskKeys.all });
+  const reset = async () => queryClient.resetQueries({ queryKey: taskKeys.all });
   return (
     <div className={styles.page}>
       <div className={styles.intro}>
@@ -60,7 +61,7 @@ export function DevPreviewPage() {
               variant="secondary"
               onClick={() => {
                 configureMockApi({ latencyMs: 1200, fail: false, offline: false });
-                void refresh();
+                void reset();
               }}
             >
               Slow loading

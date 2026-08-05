@@ -28,7 +28,7 @@ test('tab navigation, task CRUD, and dialog confirmation work', async ({ page })
   await expect(page.getByText('E2E release verified')).toBeVisible();
 
   await page.getByRole('button', { name: /Complete E2E release verified/ }).click();
-  await expect(page.getByText('Completed', { exact: true }).first()).toBeVisible();
+  await expect(row.getByText(/^Completed ·/)).toBeVisible();
   await page.getByRole('button', { name: /Delete E2E release verified/ }).click();
   const confirmation = page.getByRole('alertdialog', { name: 'Delete this task?' });
   await expect(confirmation).toBeVisible();
@@ -60,9 +60,11 @@ test('empty, API error, offline, theme, safe area, and 404 states are reachable'
   await expect(page.getByRole('heading', { name: 'Something went wrong' })).toBeVisible();
 
   await context.setOffline(true);
-  await page.reload({ waitUntil: 'domcontentloaded' });
-  await expect(page.getByText(/Offline — cached content may be stale/)).toBeVisible();
-  await context.setOffline(false);
+  try {
+    await expect(page.getByText(/Offline — cached content may be stale/)).toBeVisible();
+  } finally {
+    await context.setOffline(false);
+  }
 
   await page.goto('/dev/telegram-preview');
   await page.getByRole('button', { name: 'Dark' }).click();

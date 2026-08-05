@@ -20,13 +20,28 @@ function viewportFromWebApp(webApp: TelegramWebApp): ViewportState {
   };
 }
 
+function snapshotFromWebApp(webApp: TelegramWebApp): TelegramRuntimeSnapshot {
+  return {
+    kind: 'telegram',
+    colorScheme: webApp.colorScheme,
+    themeParams: webApp.themeParams,
+    viewport: viewportFromWebApp(webApp),
+    unverifiedUser: webApp.initDataUnsafe?.user ?? null,
+  };
+}
+
 class OfficialTelegramRuntime implements TelegramRuntimeAdapter {
   readonly kind = 'telegram' as const;
   readonly isTelegramRuntime = true;
   private readonly listeners = new Set<() => void>();
-  private readonly eventHandler: TelegramEventHandler = () => this.emit();
+  private snapshot: TelegramRuntimeSnapshot;
+  private readonly eventHandler: TelegramEventHandler = () => {
+    this.snapshot = snapshotFromWebApp(this.webApp);
+    this.emit();
+  };
 
   constructor(private readonly webApp: TelegramWebApp) {
+    this.snapshot = snapshotFromWebApp(webApp);
     for (const event of [
       'themeChanged',
       'viewportChanged',
@@ -41,13 +56,7 @@ class OfficialTelegramRuntime implements TelegramRuntimeAdapter {
     return this.webApp.initData;
   }
 
-  getSnapshot = (): TelegramRuntimeSnapshot => ({
-    kind: this.kind,
-    colorScheme: this.webApp.colorScheme,
-    themeParams: this.webApp.themeParams,
-    viewport: viewportFromWebApp(this.webApp),
-    unverifiedUser: this.webApp.initDataUnsafe?.user ?? null,
-  });
+  getSnapshot = (): TelegramRuntimeSnapshot => this.snapshot;
 
   subscribe = (listener: () => void): (() => void) => {
     this.listeners.add(listener);
@@ -183,7 +192,7 @@ function getOfficialWebApp(): TelegramWebApp | null {
 
 export async function createTelegramRuntime(): Promise<TelegramRuntimeAdapter> {
   const webApp = getOfficialWebApp();
-  if (webApp) return new OfficialTelegramRuntime(webApp);
+  if (webApp?.initData.trim()) return new OfficialTelegramRuntime(webApp);
   if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_BROWSER_MOCK !== 'false') {
     const { BrowserMockRuntime } = await import('./browser-mock');
     const runtime = new BrowserMockRuntime();
