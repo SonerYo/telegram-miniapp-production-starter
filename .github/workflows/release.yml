@@ -1,0 +1,20 @@
+name: Release source archive
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build deterministic source archive
+        run: git archive --format=zip --prefix=telegram-miniapp-production-starter/ --output=telegram-miniapp-production-starter-${GITHUB_REF_NAME}.zip HEAD
+      - run: bash scripts/verify_archive.sh telegram-miniapp-production-starter-${GITHUB_REF_NAME}.zip
+      - run: gh release create "$GITHUB_REF_NAME" telegram-miniapp-production-starter-${GITHUB_REF_NAME}.zip --verify-tag --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

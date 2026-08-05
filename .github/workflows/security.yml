@@ -1,0 +1,27 @@
+name: Advisory security checks
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 5 * * 3"
+
+permissions:
+  contents: read
+
+jobs:
+  audits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.11.33"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm audit --prod --audit-level high
+      - run: uvx pip-audit --locked apps/api/uv.lock
+      - run: bash scripts/secret_scan.sh

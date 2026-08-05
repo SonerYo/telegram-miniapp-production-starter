@@ -2,7 +2,7 @@ SHELL := /bin/bash
 PNPM := pnpm
 UV := uv
 
-.PHONY: setup dev dev-web dev-api db-up migrate seed test test-web test-api test-e2e lint typecheck format check verify build docker-build clean api-schema api-schema-check docs-check secret-scan
+.PHONY: setup dev dev-web dev-api db-up migrate seed test test-web test-api test-e2e lint typecheck format format-check check verify build docker-build clean api-schema api-schema-check docs-check secret-scan
 
 setup:
 	$(PNPM) install --frozen-lockfile
@@ -83,4 +83,3 @@ format-check:
 
 clean:
 	bash scripts/clean.sh
-

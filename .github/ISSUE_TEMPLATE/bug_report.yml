@@ -1,0 +1,35 @@
+name: Bug report
+description: Report reproducible behavior in the starter.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: Runtime
+      options: [Telegram, Browser mock, Both]
+    validations: { required: true }
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, browser or Telegram client, Node/Python versions, and commit.
+    validations: { required: true }
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected behavior }
+    validations: { required: true }
+  - type: textarea
+    id: actual
+    attributes: { label: Actual behavior }
+    validations: { required: true }
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized logs or screenshots
+      description: Remove init data, tokens, personal data, and credentials.

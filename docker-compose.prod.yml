@@ -1,0 +1,87 @@
+name: telegram-miniapp-starter-production
+
+services:
+  db:
+    image: postgres:18.3-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - starter-production-db:/var/lib/postgresql
+    networks: [starter-production]
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_VERSION: ${APP_VERSION:-0.1.0}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN}
+      TELEGRAM_INIT_DATA_MAX_AGE_SECONDS: ${TELEGRAM_INIT_DATA_MAX_AGE_SECONDS:-3600}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:?Set CORS_ALLOWED_ORIGINS}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:?Set TRUSTED_HOSTS}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_FORMAT: json
+      DEV_MOCK_AUTH: "false"
+      RATE_LIMIT_ENABLED: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=2)"]
+      interval: 15s
+      timeout: 3s
+      retries: 8
+    networks: [starter-production]
+    restart: unless-stopped
+
+  migrate:
+    profiles: [migrate]
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    command: ["alembic", "-c", "alembic.ini", "upgrade", "head"]
+    environment:
+      APP_ENV: production
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS}
+      LOG_FORMAT: json
+      DEV_MOCK_AUTH: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [starter-production]
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: runtime
+      args:
+        VITE_API_BASE_URL: /api
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [starter-production]
+    ports:
+      - "${HTTP_PORT:-8080}:8080"
+    restart: unless-stopped
+
+networks:
+  starter-production:
+    driver: bridge
+
+volumes:
+  starter-production-db:

@@ -1,0 +1,78 @@
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--color-bg);
+  text-size-adjust: 100%;
+}
+body {
+  min-width: 320px;
+  min-height: 100dvh;
+  min-height: var(--tg-viewport-stable-height);
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role='switch']:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 42%, transparent);
+  outline-offset: 2px;
+}
+a {
+  color: var(--color-accent);
+}
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+#root {
+  min-height: 100dvh;
+  min-height: var(--tg-viewport-stable-height);
+}
+.bootstrap-loading {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

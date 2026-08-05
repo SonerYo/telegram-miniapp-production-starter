@@ -1,0 +1,72 @@
+.task {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--color-border);
+}
+.task:last-child {
+  border-bottom: 0;
+}
+.taskCheck {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--color-accent-contrast);
+  background: transparent;
+  border: 2px solid var(--color-border);
+  border-radius: 9px;
+  cursor: pointer;
+}
+.taskCheck[aria-pressed='true'] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.taskCheck svg {
+  width: 17px;
+  height: 17px;
+}
+.taskBody {
+  min-width: 0;
+}
+.taskBody p {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 650;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+.taskBody span {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+}
+.task[data-completed='true'] .taskBody p {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+.taskActions {
+  display: flex;
+  gap: 4px;
+}
+.taskActions button {
+  width: 38px;
+  height: 38px;
+  flex-basis: 38px;
+  border: 0;
+  background: transparent;
+}
+@media (max-width: 350px) {
+  .task {
+    grid-template-columns: 26px minmax(0, 1fr);
+  }
+  .taskActions {
+    grid-column: 2;
+    justify-content: flex-end;
+  }
+}
