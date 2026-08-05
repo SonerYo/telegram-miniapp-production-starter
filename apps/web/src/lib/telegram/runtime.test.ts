@@ -15,6 +15,13 @@ describe('runtime selection', () => {
     expect(runtime.isTelegramRuntime).toBe(false);
   });
 
+  it('reuses one browser mock across concurrent bootstrap calls', async () => {
+    const [first, second] = await Promise.all([createTelegramRuntime(), createTelegramRuntime()]);
+
+    expect(second).toBe(first);
+    expect(window.__STARTER_MOCK_RUNTIME__).toBe(first);
+  });
+
   it('uses the official WebApp bridge when available', async () => {
     const onEvent = vi.fn<(event: TelegramEvent, callback: TelegramEventHandler) => void>();
     const webApp = fakeWebApp(onEvent);

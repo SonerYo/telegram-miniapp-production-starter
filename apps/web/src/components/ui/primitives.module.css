@@ -207,7 +207,7 @@
   border-color: color-mix(in srgb, var(--color-accent) 24%, var(--color-border));
 }
 .badge[data-tone='success'] {
-  color: var(--color-success);
+  color: color-mix(in srgb, var(--color-success) 90%, var(--color-text));
 }
 .badge[data-tone='danger'] {
   color: var(--color-danger);

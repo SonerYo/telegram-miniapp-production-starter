@@ -195,6 +195,8 @@ export async function createTelegramRuntime(): Promise<TelegramRuntimeAdapter> {
   if (webApp?.initData.trim()) return new OfficialTelegramRuntime(webApp);
   if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_BROWSER_MOCK !== 'false') {
     const { BrowserMockRuntime } = await import('./browser-mock');
+    const existing = window.__STARTER_MOCK_RUNTIME__;
+    if (existing?.kind === 'browser-mock') return existing;
     const runtime = new BrowserMockRuntime();
     window.__STARTER_MOCK_RUNTIME__ = runtime;
     return runtime;
