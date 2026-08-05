@@ -18,7 +18,7 @@ ARG VITE_API_BASE_URL=/api
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN pnpm --filter @starter/web build
 
-FROM nginx:1.28.0-alpine AS runtime
+FROM nginx:1.31.3-alpine AS runtime
 COPY infra/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY infra/nginx/security-headers.conf /etc/nginx/snippets/security-headers.conf
 COPY --from=build /workspace/apps/web/dist /usr/share/nginx/html
