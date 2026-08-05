@@ -236,3 +236,19 @@ After upload:
 **Topics:** `telegram-mini-app`, `telegram-web-app`, `react`, `typescript`, `vite`, `fastapi`, `postgresql`, `sqlalchemy`, `alembic`, `docker`, `nginx`, `playwright`, `starter-kit`, `mobile-first`, `open-source`.
 
 The truthful application draft is in `docs/codex-for-oss-application-draft.md`. It explicitly states that the project is new and has no verified adoption, contributor, download, or production-user metrics.
+
+## Post-package GitHub CI verification — 2026-08-05
+
+After the initial Work package was generated, the repository was verified in GitHub Actions:
+
+- Web lint, type checking, unit tests, and production build: passed.
+- API lint, type checking, PostgreSQL integration tests, Alembic migration check, and OpenAPI checks: passed.
+- Playwright E2E: 13/13 scenarios passed.
+- Browser mock startup, task CRUD, Telegram BackButton simulation, loading, empty, error, offline, theme, safe-area, and 404 states: passed.
+- Automated accessibility scan: passed.
+- Responsive horizontal-overflow checks at 320, 360, 375, 390, 430, and 768 px: passed.
+- Visual state capture: passed.
+- Container build job: passed.
+- Documentation checks: passed.
+
+The earlier statements that Chromium and Docker were unavailable refer only to the original Work sandbox. Full production deployment and physical Telegram iOS/Android smoke testing remain outside the verified scope.
