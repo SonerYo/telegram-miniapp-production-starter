@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
-from sqlalchemy import BigInteger, String, Uuid
+from sqlalchemy import BigInteger, DateTime, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, utc_now
@@ -24,9 +24,15 @@ class User(Base):
     language_code: Mapped[str | None] = mapped_column(String(16))
     is_premium: Mapped[bool | None]
     photo_url: Mapped[str | None] = mapped_column(String(2048))
-    created_at: Mapped[datetime] = mapped_column(default=utc_now, index=True)
-    updated_at: Mapped[datetime] = mapped_column(default=utc_now, onupdate=utc_now, index=True)
-    last_seen_at: Mapped[datetime] = mapped_column(default=utc_now, index=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utc_now, index=True
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utc_now, onupdate=utc_now, index=True
+    )
+    last_seen_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utc_now, index=True
+    )
 
     tasks: Mapped[list[Task]] = relationship(
         "Task", back_populates="owner", cascade="all, delete-orphan"
