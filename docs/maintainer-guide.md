@@ -21,11 +21,36 @@ No npm, PyPI, or Docker registry publication is configured. Adding one requires 
 
 ## First 30 days after publication
 
-- Confirm branch protection, CodeQL, Dependabot, secret scanning, and private vulnerability reporting are operating.
-- Review onboarding friction from a clean machine and fix documentation defects before adding features.
-- Triage security and correctness reports first; avoid claiming adoption without public evidence.
-- Track which extension requests repeat before expanding the core abstraction.
-- Publish maintenance expectations based on actual capacity.
+### Week 1
+
+- Publish `v0.1.0` only after the release checklist passes on the exact commit.
+- Verify a clean install on a second machine or clean CI environment.
+- Fix setup and documentation friction before adding features.
+- Open three to five concrete roadmap issues owned by the maintainer.
+- Announce the project only in relevant developer communities and collect real feedback without spam.
+
+### Week 2
+
+- Prioritize security and correctness reports, then fix the first reproducible bugs.
+- Improve Windows, macOS, and Linux setup notes from observed failures.
+- Add one practical guide requested by users.
+- Release `v0.1.1` only if the accumulated fixes justify it.
+
+### Week 3
+
+- Implement one small, repeated feature request that fits the starter's scope.
+- Extend tests around the changed trust boundary or workflow.
+- Review dependency alerts and the production license inventory.
+- Publish a short technical article or sanitized demo video if maintenance capacity allows.
+
+### Week 4
+
+- Assess actual interest using public issues, pull requests, and factual usage signals.
+- Update the roadmap and maintenance expectations based on actual capacity.
+- Define a narrow `v0.2.0` scope from repeated needs rather than speculation.
+- Update the Codex for Open Source draft only with verified facts if the current program permits submission or resubmission.
+
+This plan does not guarantee program acceptance, adoption, or community growth.
 
 ## Dependency policy
 
